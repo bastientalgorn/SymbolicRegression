@@ -1,0 +1,13 @@
+OP 0 Internal crossover
+OP 1 Leaf2Leaf
+OP 2 Op2Op
+OP 3 mutationLeaf2Op
++
+OP 4 mutationOp2Leaf
++
+OP 5 mutationShortenGraph
++
+OP 6 mutationCreateLink
++
+OP 7 mutationKeepBest
+OP 8 mutationConstants

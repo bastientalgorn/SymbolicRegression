@@ -17,7 +17,7 @@ Individual.opListLoad('../inputs/operatorsList.txt')
 # Chargement des paramètres de mutation
 Individual.mutationParametersLoad("../inputs/MutationParameters_Choice.txt")
 # Definition of the Reference Model
-Individual.setRefModel(RefModel("../inputs/Model_MembraneMatlab.txt"))
+Individual.setRefModel(RefModel("../inputs/Model_Davidson1.txt"))
 # Error and Post-Processing
 Individual.setErrorMethod("mse")
 Individual.setPostProcessing("scalling")

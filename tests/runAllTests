@@ -1,0 +1,76 @@
+#!/bin/bash
+
+executable="SymReg.py"
+
+# 20 10000 100
+
+runNb=20
+genNb=10000
+indNb=100
+rootDir="./TEST_RUN_RegSym"
+
+#runNb=5
+#genNb=100
+#indNb=50
+#rootDir="/tmp/TEST_RUN_RegSym"
+
+rm -rf $rootDir/*
+
+modelList=(
+"memb ../inputs/Model_MembraneMatlab.txt"
+"dav1 ../inputs/Model_Davidson1.txt"
+"sinc ../inputs/Model_SinusCardinal2D.txt"
+"cole ../inputs/Model_ColebrookWhite.txt"
+"quin ../inputs/Model_Quintic.txt"
+"sext ../inputs/Model_Sextic.txt"
+)
+
+paramList=(
+"../inputs/MutationParameters_Full.txt"
+"../inputs/MutationParameters_Spe.txt"
+"../inputs/MutationParameters_Basic.txt"
+)
+
+processList=''
+k=0
+for model in "${modelList[@]}"
+do
+  modelFile=${model#* }
+  modelShortName=${model% *}
+  #echo "========================"
+  #echo "Model file: "$modelFile
+  #echo "Model Short name: "$modelShortName
+
+
+  for paramFile in "${paramList[@]}"
+  do
+    paramShortName=${paramFile#*_}
+    paramShortName=${paramShortName:0:3}
+    runDir=$rootDir"/run_"$modelShortName"_"$paramShortName
+    s="python $executable $modelFile $paramFile $runDir $runNb $genNb $indNb"
+    processList[k]=$s
+    k=$((k+1))
+
+    #echo "    Param Short Name: "$paramShortName
+    #echo "    runDir: "$runDir
+    #echo "    "$s
+    #echo "    ----"
+    #echo $k
+  done
+done
+
+echo "========================"
+for p in "${processList[@]}"
+do
+  echo $p
+done
+echo "========================"
+
+IFS=""
+myParallelize 7 ${processList[*]} &
+echo "Finished ALL"
+
+
+
+
+

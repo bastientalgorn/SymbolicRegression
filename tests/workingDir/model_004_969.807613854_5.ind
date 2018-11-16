@@ -1,0 +1,59 @@
+# FileName
+workingDir/model_004_969.807613854_5.ind
+
+# DataFile
+Sextic
+
+# VariablesNumber
+1
+
+# UsedVariables
+[0]
+
+# NodesNumber
+5
+
+# FullNodeNumber
+27
+
+# Complexity
+5
+
+# MeanSquareError
+969.807613854
+
+# MaxError
+68.8209848889
+
+# MaxRelativeError
+1510.50254065
+
+# Correlation
+0.989403293436
+
+# MseCheck
+969.807613854
+
+# LogHMax
+5.52777139576
+
+# Graph
+node 0 op *
+0 1 0
+0 1 1
+node 1 op *
+1 3 0
+1 3 1
+1 3 2
+1 3 3
+node 2 var x0
+node 3 op /
+3 2 0
+3 4 1
+node 4 cte 0.611152834372883
+
+# Operators
+*         ; 2 ; ".*"
+*         ; 4 ; ".*"
+/         ; 2 ; "./"
+

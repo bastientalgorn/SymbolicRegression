@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for f in `ls *.dot`
+do
+  f2=${f%%.*}'.pdf'
+  echo $f' >>> '$f2
+  dot -Tpdf $f -o $f2
+done

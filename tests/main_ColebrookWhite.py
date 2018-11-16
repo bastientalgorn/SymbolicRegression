@@ -17,7 +17,7 @@ Individual.opListLoad('../inputs/operatorsList.txt')
 # Chargement des paramètres de mutation
 Individual.mutationParametersLoad("../inputs/MutationParameters_Choice.txt")
 # Definition of the Reference Model
-Individual.setRefModel(RefModel("../inputs/Model_MembraneMatlab.txt"))
+Individual.setRefModel(RefModel("../inputs/Model_ColebrookWhite.txt"))
 # Error and Post-Processing
 Individual.setErrorMethod("mse")
 Individual.setPostProcessing("scalling")
@@ -31,7 +31,6 @@ for k in range(10):
     # Definition du niveau de blabla
     MyGenAlgBehavior.setVerboseLevel(3)
     # Copy of the main & seed files in the result directory
-    os.system("cp "+__file__+" "+resultDir)
     os.system("cp seed.txt "+resultDir)
 
     # Create Genetic Algorithm with own individual and behavior
@@ -51,4 +50,6 @@ for k in range(10):
 
     # Run the GA...
     genAlg.run()
+
+
 

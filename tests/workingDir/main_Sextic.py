@@ -14,22 +14,33 @@ from GenAlgBehavior import MyGenAlgBehavior
 
 # Definition of the list of enable operators
 Individual.opListLoad('../inputs/operatorsList.txt')
+
+#Individual.opListLoad('./model_001_0.0225887259063_11.ind')
+MyGenAlgBehavior.loadDirectories('.')
+
+
 # Chargement des paramètres de mutation
-Individual.mutationParametersLoad("../inputs/MutationParameters_Choice.txt")
+Individual.mutationParametersLoad("../inputs/MutationParameters_Full.txt")
 # Definition of the Reference Model
-Individual.setRefModel(RefModel("../inputs/Model_MembraneMatlab.txt"))
+Individual.setRefModel(RefModel("Sextic"))
 # Error and Post-Processing
 Individual.setErrorMethod("mse")
 Individual.setPostProcessing("scalling")
 
-for k in range(10):
+outputList = 'info-improvement end-pareto end-convergence'
+
+for k in range(1):
     # Set the seed
     util.setSeed(k)
+
     # Definition of the result Directory
-    resultDir = "result_"+__file__.replace(".py","")+"_"+util.getDate()
+    #resultDir = "result_"+__file__.replace(".py","")+"_"+util.getDate()
+    resultDir = "workingDir"
     MyGenAlgBehavior.setResultDir(resultDir)
-    # Definition du niveau de blabla
-    MyGenAlgBehavior.setVerboseLevel(3)
+
+    # Outputs definition
+    MyGenAlgBehavior.setOutputList(outputList)
+
     # Copy of the main & seed files in the result directory
     os.system("cp "+__file__+" "+resultDir)
     os.system("cp seed.txt "+resultDir)
@@ -38,8 +49,8 @@ for k in range(10):
     genAlg = PYGA_GenAlg(Individual, MyGenAlgBehavior)
 
     # Set paramaters of the GA
-    genAlg.setParameters(pop_size=200,
-                         nb_gen=10000,
+    genAlg.setParameters(pop_size=100,
+                         nb_gen=1000,
                          crossrate=25,
                          mutaterate=40,
                          select='best',

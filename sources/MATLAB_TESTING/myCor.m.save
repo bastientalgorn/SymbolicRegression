@@ -1,0 +1,94 @@
+function Q = myCor(x,fx,methode,biais)
+
+N = length(x);
+x =  x/std(x);
+fx = fx/std(fx);
+
+% mean(abs(diff(fx)))
+% mean(abs(diff(x)))
+
+
+
+switch methode
+    case 1
+        Q = abs(corr(x(:),fx(:)));   
+    case 2
+        % Pas de tri
+        Dx  = abs(diff(x ))+biais;
+        Dfx = abs(diff(fx))+biais;
+        %find(Dx==0)
+        Q = max(Dfx./Dx);
+    case 3
+        % Tri de r
+        [xSort,i] = sort(x);
+        Dx =  abs(diff(xSort))+biais;
+        Dfx = abs(diff(fx(i)))+biais;
+        Q = max(Dfx./Dx);
+    case 4
+        % Comparaison de toutes les paires
+        % Matrice de distance
+        Dx = zeros(N*(N-1)/2,1);
+        Dfx = Dx;
+        k = 1;
+        for i=1:N-1
+            for j=i+1:N
+                Dx(k)  = x(i) -x(j) +biais;
+                Dfx(k) = fx(i)-fx(j)+biais;
+                k = k + 1;
+            end
+        end
+        Q = -max(Dfx./Dx)/min(Dfx./Dx);
+    case 5
+        % Pas de tri
+        Dx  = abs(diff(x ))+biais;
+        Dfx = abs(diff(fx))+biais;
+        Q = max(exp(-Dx)./exp(-Dfx));  
+        
+    case 6
+        % Pas de tri
+        Dx  = abs(diff(x ));
+        Dfx = abs(diff(fx));
+        Q = max(Dx.*exp(-Dfx));  
+    case 7
+        % Pas de tri
+        Dx  = diff(x );
+        Dfx = diff(fx);
+        Q = mean(exp(-Dx)./exp(-Dfx));  
+        
+    case 8
+        % Pas de tri
+        Dx  = diff(x);
+        Dfx = diff(fx);
+        p = Dfx./Dx;
+        Q = 1-log(std(p));
+        
+    case 9
+        % Pas de tri
+        Dx  = abs(diff(x));
+        Dfx = abs(diff(fx));
+        %p = Dfx./Dx;
+        %Q = 1/std(p);
+        Q = corr(Dx',Dfx');
+
+    case 10
+        % Comparaison de toutes les paires
+        % Matrice de distance
+        Dx = zeros(N*(N-1)/2,1);
+        Dfx = Dx;
+        k = 1;
+        for i=1:N-1
+            for j=i+1:N
+                Dx(k)  = x(i) -x(j) +biais;
+                Dfx(k) = fx(i)-fx(j)+biais;
+                k = k + 1;
+            end
+        end
+        Q = corr(abs(Dx),abs(Dfx));
+        
+    otherwise
+        display(methode)
+        error('No valid method');
+        
+end
+%Q = 1/Q;
+            

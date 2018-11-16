@@ -17,7 +17,7 @@ Individual.opListLoad('../inputs/operatorsList.txt')
 # Chargement des paramètres de mutation
 Individual.mutationParametersLoad("../inputs/MutationParameters_Choice.txt")
 # Definition of the Reference Model
-Individual.setRefModel(RefModel("../inputs/Model_MembraneMatlab.txt"))
+Individual.setRefModel(RefModel("Quintic"))
 # Error and Post-Processing
 Individual.setErrorMethod("mse")
 Individual.setPostProcessing("scalling")
@@ -38,8 +38,8 @@ for k in range(10):
     genAlg = PYGA_GenAlg(Individual, MyGenAlgBehavior)
 
     # Set paramaters of the GA
-    genAlg.setParameters(pop_size=200,
-                         nb_gen=10000,
+    genAlg.setParameters(pop_size=30,
+                         nb_gen=100,
                          crossrate=25,
                          mutaterate=40,
                          select='best',

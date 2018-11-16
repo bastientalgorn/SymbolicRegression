@@ -1,0 +1,10 @@
+#!/bin/bash
+
+dataFile='../inputs/Model_Sextic.txt'
+paramFile='../inputs/MutationParameters_Full.txt'
+dirName='./workingDir'
+runNb=2
+genNb=20
+indNb=20
+python SymReg.py $dataFile $paramFile $dirName $runNb $genNb $indNb
+

@@ -1,0 +1,19 @@
++;    on;2;3;4
+-;    on;2;
+*;    on;2;3;4; ".*"
+*;    on;5; "multiply($x*$)"
+/;    on;2;     "./"
+^;    off;2
+powgen; on;2
+cos;  off;1
+sin;  off;1
+tan;  on;1
+exp;  on;1
+sqrt; on;1;     "mysqrt($x0$)"
+logabs; on;1;   "log(abs($x0$))"
+log;  off;1
+abs;  on;1
+min;  on;2;3;    "mymin($x*$)"
+max;  on;2;3;    "mymax($x*$)"
+tanh; on;1
+if;   on;3;     "( ($x0$<0).*$x1$ + ($x0$>=0).*$x2$ )"
