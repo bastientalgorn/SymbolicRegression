@@ -149,13 +149,13 @@ class Node():
 
     def getId(self):
         return self.__id
+
     def setId(self, newId):
         self.__id = newId
 
-
-
     def getValue(self):
         return self.__value
+
     def setValue(self, newVal):
         self.__value = newVal
 
@@ -357,7 +357,7 @@ class Node():
 
         # Duplicate right node
         if self.__right:
-            duplicated = False ## NB : j'ai aussi rajoutÈ cette ligne, comme pour "Duplicate Left". J'ai raison ???
+            duplicated = False ## NB : j'ai aussi rajout√© cette ligne, comme pour "Duplicate Left". J'ai raison ???
             if duplicatedNodes is not None:
                 if self.__right in duplicatedNodes[0]: ## NB : avant il y avait "left". Erreur ??
                     index = duplicatedNodes[0].index(self.__right)
@@ -536,8 +536,8 @@ class Node():
             else:
                 print self.__type
                 print "Et que de suie une errante prison\n\
-                Eteinge dans l'horreur de ses noires trainÈes\n\
-                Le soleil se mourant jaun‚tre ‡ l'horizon !"
+                Eteinge dans l'horreur de ses noires train√©es\n\
+                Le soleil se mourant jaun√¢tre √† l'horizon !"
 
 
         #print "Node "+str(self.__id)+" : "+str(self.__result)
@@ -551,11 +551,11 @@ class Node():
     def getCorrelation(self):
         if self.__correlation is None:
             if self.__type == 'cte':
-                # si c'est une constante, on considËre la corrÈlation comme Ètant nulle
+                # si c'est une constante, on consid√®re la corr√©lation comme √©tant nulle
                 self.__correlation = -3
             elif self.__type == 'var':
-                # si c'est une variable, on va chercher dans le modËle de refÈrence la 
-                # valeure de la corrÈlation, qu'on aura calculÈe une fois pour toute 
+                # si c'est une variable, on va chercher dans le mod√®le de ref√©rence la 
+                # valeure de la corr√©lation, qu'on aura calcul√©e une fois pour toute 
                 # pour chaque variable
                 self.__correlation = Node.refModel.getVariableCorrelation(self.__value)
             elif self.__type == 'link':
@@ -563,13 +563,13 @@ class Node():
             else:
                 if any(numpy.isinf(self.getResult())) or any(numpy.isnan(self.getResult())) :
                     # Si il y a des inf, on met une correlation de 0, ce qui permet de ne pas
-                    # pas trop pÈnaliser les arbres qui contienne des operateurs.
+                    # pas trop p√©naliser les arbres qui contienne des operateurs.
                     self.__correlation = -1
                 else:
-                    # si le noeud est un opÈrateur, alors on calcul la corrÈlation avec la mÈthode de Pearson.
-                    # Pour ce faire, on utilisera la fonction de rÈfÈrence normalisÈe, ce qui 
+                    # si le noeud est un op√©rateur, alors on calcul la corr√©lation avec la m√©thode de Pearson.
+                    # Pour ce faire, on utilisera la fonction de r√©f√©rence normalis√©e, ce qui 
                     # permet de ne faire qu'une seule fois le calcul de la moyenne et de la variance
-                    # de la fonction de rÈfÈrence
+                    # de la fonction de r√©f√©rence
 
                     # Test des variations du result
                     if max(self.getResult())-min(self.getResult()) < 2*MACHINE_EPS:
