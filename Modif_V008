@@ -1,0 +1,77 @@
+Vesion 008 Bastien
+Maj 21 décembre, 00h16 (heure de Montréal, le vrai début de l'hiver !!)
+
+Je travaille actuellement sur le croisement interne en mode reuse, c'est à dire avec Parents multiples.
+J'ai bon espoir de faire un truc qui tourne bien demain. 
+
+Node => Creation de la methode "setRandomLeaf" et de divers accesseurs
+Ajout d'une limite de récursivité (pour rendre le débug plus rapide)
+
+Tree :
+Création de getRandomRouletteNodeWeakStrong qui renvoie deux noeuds différents (un faible et un fort)
+Création de resetStatut (qui ressemble pas mal à l'ancien setUncertified...)
+
+Individual:
+Ajout d'un opérateur Leaf2Op, qui sert à étoffer un peu les arbres.
+Ajout d'une gestion "fine" des probas des opérateurs en fonction de la longueur de l'arbre.
+Ajout d'une exception sur le crossover intern : ne peut être utilisé que si il y a au moins 2 noeuds
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+Version Raph 007 (enfin... Moi j'ai pas de numéro de version, donc je te suis :D)
+Maj du 20/12/12 (juste avant la fin du monde, classe !)
+
+Grosse modif sur Node -> remise en place de plusieurs parents
+Avec répercutions sur les méthodes appelées dans les autres classes et en interne.
+
+Individual.py
+- J'ai gardé mon __str__... Question de goût :-)
+- Mutation -> numpy.empty(6, 'floatxx')
+Je suis passé à xx = 32 parce que avec ton 16, il me disait "TypeError: data type not understood", là ça marche, je sais pas si ça a un impacte... Je te laisse juger.
+- objectives: j'ai fais un truc qui donne plus de flexibilté (question de goût aussi...)
+
+Tree.py:
+- Refonte de PasteNode pour coller à tout ça :)
+Notemment, j'ai refait le mode "reuse" comme il me semble adapté, je ne sais pas si c'est bien ça que tu voulais, tu me diras.
+- __resetResults : adaptation aux multiples parents...
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+Version Bastien 006
+Dernière mise à jour, jeudi 20 décembre vers 6h (heure de Toulouse)
+En fait à Montréal il est 23h30, je suis dans un fauteuil, avec une couverture, à côté du feu de bois.... Et je code ! Yeah !!
+
+Grosse modifications dans la structure du problème. D'une part, le calcul de la correlation a été modifié. A présent la correlation est toujours comprise entre 0 et 1 (on prend la valeur absolue de la correlation de Pearson qui est entre -1 et +1).
+0 => Pas de correlation
+1 => Correlation très positive ou très négative (ie : le modèle de référence peut être retrouvé modulo une constante multiplicative et une constante additive).
+
+Les objectifs à minimiser sont :
+Obj 1 : 1 - rootNode.getCorrelation  (donc au mieux, ça fait 0. Au pire, voir plus bas, ça fait 4. A la louche, on peut dire que les valeurs intéressantes sont celles entre 0 et 0.5)
+0bj 2 : la complexité (nombre total de noeud dans l'arbre)
+
+
+Autres modifications :
+- Dans les fichiers main, j'ai mis le répertoire d'input en chemin relatif (sinon on va galérer à chaque fois à le mettre à jour)
+
+- Génération de nouveaux cas test en 2D : MembraneMatlab.txt et SinusCardinal2D.txt
+
+- Correction de la methode getCorrelation pour la classe Node. 
+Si le noeud est de type constante => c'est vraiment ce qu'il y a de moins intéressant => correlation = -3
+Si le noeud est de type variable => on prend la correlation de la variable (qui a été calculée au tout début)
+Si le noeud est un opérateur mais que son résultat ne varie pas => c'est pas très intéressant (typiquement, c'est un opérateur dont les arguments sont des constantes) => correlation = -2
+Si le noeud est un opérateur mais que certaines valeurs sont inf ou Nan => Au moins, celui là il prend des risques => Correlation = -1
+Si le noeud est un opérateur et que sa corrélation peut réellement être calculée, alors ben voilà quoi, on la calcule !
+
+- Correction de la methode de la roulette biaisée (weak et strong étaient inversés)
+
+- Pour la classe Node, pour la methode resetResult, ajout de la mise à None de la correlation.
+
+- Modification de __str__ pour Individual (question de goûts...)
+
+- Modification de l'organisation des divers opérateurs de mutation. La probabilité d'utilisation de chaque opérateur peut être choisie indépendamment des autres opérateurs. Par la suite, les probas sont normalisées pour que la somme fasse 1. C'est plus pratique pour définir de façon palpable la proba d'utilisation de chaque opérateur. Ces développements se trouvent dans la méthode mutation de la classe Individual, mais il faudra vraiment les bouger (là ça fait pas sérieux !).
+
+- Rajout de quelques accesseurs en rapport avec les modifications précédentes.
+
+
